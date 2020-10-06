@@ -10,9 +10,9 @@ class Ride extends Model {
 	}
 }
 
-class Location extends Model {
+class State extends Model {
 	static get tableName() {
-		return 'locat';
+		return 'state';
 	}
 }
 
@@ -48,16 +48,12 @@ class Vehicle extends Model {
 					to: 'ride.vehicleId'
 				}
 			}
-			locat: {
-				relation: Model.ManyToManyRelation,
+			state: {
+				relation: Model.BelongsToOneRelation,
 				modelClass: Location,
 				join: {
 					from: 'vehicle.licenseState',
-					through: {
-						from: 'state.abbreviation',
-						to: 'state.name'
-					},
-					to: 'locat.state'
+					to: 'state.abbreviation'
 				}
 			},
 			vehicleType: {
