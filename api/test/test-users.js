@@ -1,5 +1,10 @@
+//give access to knex and Model
+const { knex, Model } = require("/Documents/githubRepo/ride-share/api/db.js");
 
-async function smokeTest() {
-	await User.query()
-		.withGraphFetched("
-}
+User.query()
+	.withGraphFetched('drivers')
+	.where('id', 1)
+	.first()
+	.then(user => console.log(user))
+	.catch(error => console.log(error.message));
+
