@@ -16,10 +16,19 @@ class Vehicle extends Model {
 	}
 }
 
+class State extends Model
+{
+	static get tableName()
+	{
+		return 'state';
+	}
+}
+
 class Driver extends Model {
 	static get tableName() {
 		return "driver";
 	}
+
 	static get relationMappings() {
 		return {
 			user: {
@@ -52,6 +61,16 @@ class Driver extends Model {
 						to: 'authorization.vehicleId'
 					},
 					to: 'vehicle.id'
+				}
+			},
+			state:
+			{
+				relation: Model.BelongsToOneRelation,
+				ModelClass: Location,
+				join:
+				{
+					from: 'driver.licenseState',
+					to: 'state.abbreviation'
 				}
 			}
 		};
