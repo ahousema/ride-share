@@ -1,35 +1,6 @@
 //give access to knex and Model
 const { knex, Model } = require("/Documents/githubRepo/ride-share/api/db.js");
 
-class Vehicle extends Model
-{
-	static get tableName()
-	{
-		return "vehicle";
-	}
-}
-class Driver extends Model
-{
-	static get tableName()
-	{
-		return "driver";
-	}
-}
-class User extends Model
-{
-	static get tableName()
-	{
-		return "user";
-	}
-}
-class Location extends Model
-{
-	static get tableName()
-	{
-		return "locat";
-	}
-}
-
 class Ride extends Model
 {
 	static get tableName()
