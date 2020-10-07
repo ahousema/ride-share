@@ -1,5 +1,5 @@
 //give access to knex and Model
-const { knex, Model } = require("../api/db.js");
+const { knex, Model } = require("../db.js");
 import { Vehicle } from './Vehicle.js';
 import { Driver } from './Driver.js';
 import { User } from './User.js';
