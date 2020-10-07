@@ -1,5 +1,6 @@
 //give access to knex and Model
 const { knex, Model } = require("/Documents/githubRepo/ride-share/api/db.js");
+import { Vehicle } from './Vehicle.js';
 
 class VehicleType extends Model {
 	static get tableName() {
@@ -18,3 +19,5 @@ class VehicleType extends Model {
 		};
 	}
 }
+
+export { VehicleType };
