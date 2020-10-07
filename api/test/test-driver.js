@@ -1,14 +1,28 @@
 //Give access to knex and Model
 const { knex, Model } = require("../db.js");
-import { Driver } from '../models/Driver.js';
 
-Driver.query()
-	.select('id', 'licenseNumber')
-	.where('id', 1)
-	.whithGraphFetched('vehicle')
-	.first()
-	.then(driver => {
-		console.log('License Number', driver.licenseNumber);
-		driver.vehicle.forEach(vehic => console.log('Vehicle', vehic.make))
-	})
-	.catch(error => console.log(error.message));
+//add new entry
+knex('Driver')
+	.insert({id: 5, userId: 5, licenseNumber: 1233456754, licenseState: 'IN'})
+	.then(result => console.log(result)
+	.then(() => knex.destroy());
+
+//print table data
+knex
+	.select().table('Driver')
+	.then(result => console.log(result))
+	.then(() => knex.destroy());
+
+//delete entry
+knex('Driver')
+	.where('id', 5)
+	.del()
+	.then(result => console.log(result))
+	.then(() => knex.destroy());
+
+//access related table data
+knex
+	.select().table('Driver')
+	.then(
+
+
