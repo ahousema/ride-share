@@ -21,9 +21,25 @@ knex('User')
 	.then(result => console.log(result))
 	.then(() => knex.destroy());
 */
-
 knex
     .select().table('User')
     .then(result => console.log(result))
     .then(() => knex.destroy());
+/*
+
+knex
+	.select('firstName', 'lastName')
+	.from('User')
+	.innerJoin('Driver', 'User.id', 'Driver.userId')
+	.then(result => console.log(result))
+	.then(() => knex.destroy());
+/*
+
+knex
+    .select('firstName', 'lastName', 'Ride.date', 'Ride.time', 'Ride.fromLocationId', 'Ride.toLocationId')
+    .from('User')
+    .innerJoin('Ride', 'User.id', 'Ride.id')
+    .then(result => console.log(result))
+    .then(() => knex.destroy());
+*/
 
