@@ -321,6 +321,82 @@
           "licenseState" : "IN"
         }
       },
+      "Ride" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "time" : {
+            "type" : "string"
+          },
+          "distance" : {
+            "type" : "number"
+          },
+          "fuelPrice" : {
+            "type" : "number"
+          },
+          "fee" : {
+            "type" : "number"
+          },
+          "vehicleId" : {
+            "type" : "integer"
+          },
+          "fromLocationId" : {
+            "type" : "integer"
+          },
+          "toLocationId" : {
+            "type" : "integer"
+          }
+        },
+        "description" : "Each ride of **Ride Share**",
+        "example" : {
+          "id" : 42,
+          "date" : "10/20/2020",
+          "time" : "11:40am",
+          "distance" : 100.3,
+          "fuelPrice" : 5.0,
+          "fee" : 11.99,
+          "vehicleId" : 42,
+          "fromLocationId" : 42,
+          "toLocationId" : 43
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "zipCode" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Each location of **Ride Share**",
+        "example" : {
+          "id" : 42,
+          "name" : "City Hall",
+          "address" : "412 New City st.",
+          "city" : "New City",
+          "state" : "IN",
+          "zipCode" : 47602
+        }
+      },
       "inline_response_201" : {
         "type" : "object",
         "properties" : {
