@@ -1,0 +1,359 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Ride Share API",
+    "description" : "`API` for **COS 243** Semester Project",
+    "version" : "0.1.0"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "tags" : [ {
+    "name" : "user",
+    "description" : "Ride Share users"
+  }, {
+    "name" : "vehicle-type",
+    "description" : "Vehicle types"
+  }, {
+    "name" : "driver",
+    "description" : "Ride Share drivers"
+  }, {
+    "name" : "ride",
+    "description" : "Ride Share rides"
+  }, {
+    "name" : "location",
+    "description" : "Ride Share locations"
+  } ],
+  "paths" : {
+    "/users" : {
+      "summary" : "Operations on users",
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get all users",
+        "responses" : {
+          "200" : {
+            "description" : "All users fetched successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Create a new user",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created sucessfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_201"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Not created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                },
+                "example" : {
+                  "message" : "Duplicate email address"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}" : {
+      "summary" : "Operations on a single user",
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of user to fetch",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/vehicle-types" : {
+      "get" : {
+        "tags" : [ "vehicle-type" ],
+        "summary" : "Retrieve all vehicle types",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VehicleType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "vehicle-type" ],
+        "summary" : "Create a new vehicle type.",
+        "description" : "_Each_ vehicle in **Ride Share** has a `type`, making it easier for riders to identify the vehicle.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "New vehicle type created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VehicleType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicle-types/{id}" : {
+      "delete" : {
+        "tags" : [ "vehicle-type" ],
+        "summary" : "Delete an existing vehicle type",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Vehicle deleted"
+          },
+          "400" : {
+            "description" : "Can't delete vehicle"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "vehicle-type" ],
+        "summary" : "Update an existing vehicle type",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Updated vehicle type",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VehicleType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "No such vehicle ID"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Generic error message",
+        "example" : {
+          "message" : "Something strange happened."
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "isAdmin" : {
+            "type" : "boolean"
+          }
+        },
+        "description" : "Each user of **Ride Share**",
+        "example" : {
+          "id" : 42,
+          "firstName" : "Fred",
+          "lastName" : "Ziffle",
+          "email" : "fred@example.com",
+          "password" : "super-secret-thing",
+          "phone" : "765-555-1212",
+          "isAdmin" : false
+        }
+      },
+      "VehicleType" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "vehicleType" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Type of a vehicle",
+        "example" : {
+          "id" : 42,
+          "type" : "Pickup Truck"
+        }
+      },
+      "Driver" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "userId" : {
+            "type" : "integer"
+          },
+          "licenseNumber" : {
+            "type" : "integer"
+          },
+          "licenseState" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Each driver of **Ride Share**",
+        "example" : {
+          "id" : 42,
+          "userId" : 42,
+          "licenseNumber" : 1245665313,
+          "licenseState" : "IN"
+        }
+      },
+      "inline_response_201" : {
+        "type" : "object",
+        "properties" : {
+          "userId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "userId" : 42
+        }
+      },
+      "body" : {
+        "type" : "object",
+        "properties" : {
+          "vehicleType" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "vehicleType" : "Pickup Truck"
+        }
+      },
+      "body_1" : {
+        "type" : "object",
+        "properties" : {
+          "vehicleType" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "vehicleType" : "SUV"
+        }
+      }
+    }
+  }
+}
