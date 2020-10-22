@@ -1019,6 +1019,192 @@
           }
         }
       }
+    },
+    "/locations" : {
+      "summary" : "Operations on locations",
+      "get" : {
+        "summary" : "Get all locations",
+        "tags" : [ "location" ],
+        "responses" : {
+          "200" : {
+            "description" : "All locations fetched successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Location"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a new location",
+        "tags" : [ "location" ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Location"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created sucessfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "integer"
+                    },
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "address" : {
+                      "type" : "string"
+                    },
+                    "city" : {
+                      "type" : "string"
+                    },
+                    "state" : {
+                      "type" : "string"
+                    },
+                    "zipCode" : {
+                      "type" : "string"
+                    }
+                  },
+                  "example" : {
+                    "id" : 42,
+                    "name" : "City Hall",
+                    "address" : "412 New City st.",
+                    "city" : "New City",
+                    "state" : "IN",
+                    "zipCode" : 47602
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Not created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                },
+                "example" : {
+                  "message" : "Duplicate location"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/locations{id}" : {
+      "summary" : "Operations on a single location",
+      "get" : {
+        "summary" : "Get location by ID",
+        "tags" : [ "location" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "description" : "ID of location to fetch",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Location not found"
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Update an existing location",
+        "tags" : [ "location" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "requestBody" : {
+          "description" : "Updated location",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "address" : {
+                    "type" : "string"
+                  },
+                  "city" : {
+                    "type" : "string"
+                  },
+                  "state" : {
+                    "type" : "string"
+                  },
+                  "zipCode" : {
+                    "type" : "string"
+                  }
+                },
+                "example" : {
+                  "id" : 42,
+                  "name" : "City Hall",
+                  "address" : "412 New City rd.",
+                  "city" : "New City",
+                  "state" : "IN",
+                  "zipCode" : 47602
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "No such location ID"
+          }
+        }
+      }
     }
   }
 }
