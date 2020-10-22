@@ -523,6 +523,84 @@
             "description" : "Vehicle not found"
           }
         }
+      },
+      "patch" : {
+        "summary" : "Update an existing vehicle",
+        "tags" : [ "vehicle" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "requestBody" : {
+          "description" : "Updated vehicle",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "make" : {
+                    "type" : "string"
+                  },
+                  "model" : {
+                    "type" : "string"
+                  },
+                  "color" : {
+                    "type" : "string"
+                  },
+                  "vehicleTypeId" : {
+                    "type" : "integer"
+                  },
+                  "capacity" : {
+                    "type" : "integer"
+                  },
+                  "mpg" : {
+                    "type" : "number"
+                  },
+                  "licenseState" : {
+                    "type" : "string"
+                  },
+                  "licensePlate" : {
+                    "type" : "string"
+                  }
+                },
+                "example" : {
+                  "id" : 42,
+                  "make" : "Honda",
+                  "model" : "Accord",
+                  "color" : "blue",
+                  "vehicleTypeId" : 41,
+                  "capacity" : 5,
+                  "mpg" : 20,
+                  "licenseSate" : "IN",
+                  "licensePlate" : "483fg7"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VehicleType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "No such vehicle ID"
+          }
+        }
       }
     },
     "/vehicle-types" : {
@@ -728,6 +806,216 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/rides" : {
+      "summary" : "Operations on rides",
+      "get" : {
+        "summary" : "Get all rides",
+        "tags" : [ "ride" ],
+        "responses" : {
+          "200" : {
+            "description" : "All rides fetched successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Ride"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a new ride",
+        "tags" : [ "ride" ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Ride"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created sucessfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "integer"
+                    },
+                    "date" : {
+                      "type" : "string"
+                    },
+                    "time" : {
+                      "type" : "string"
+                    },
+                    "distance" : {
+                      "type" : "number"
+                    },
+                    "fuelPrice" : {
+                      "type" : "number"
+                    },
+                    "fee" : {
+                      "type" : "number"
+                    },
+                    "vehicleId" : {
+                      "type" : "integer"
+                    },
+                    "fromLocationId" : {
+                      "type" : "integer"
+                    },
+                    "toLocationId" : {
+                      "type" : "integer"
+                    }
+                  },
+                  "example" : {
+                    "id" : 42,
+                    "date" : "10/20/2020",
+                    "time" : "11:40am",
+                    "distance" : 100.3,
+                    "fuelPrice" : 5.0,
+                    "fee" : 11.99,
+                    "vehicleId" : 42,
+                    "fromLocationId" : 42,
+                    "toLocationId" : 43
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Not created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                },
+                "example" : {
+                  "message" : "Duplicate ride"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rides{id}" : {
+      "summary" : "Operations on a single ride",
+      "get" : {
+        "summary" : "Get ride by ID",
+        "tags" : [ "ride" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "description" : "ID of ride to fetch",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ride"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ride not found"
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Update an existing ride",
+        "tags" : [ "ride" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "requestBody" : {
+          "description" : "Updated ride",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "date" : {
+                    "type" : "string"
+                  },
+                  "time" : {
+                    "type" : "string"
+                  },
+                  "distance" : {
+                    "type" : "number"
+                  },
+                  "fuelPrice" : {
+                    "type" : "number"
+                  },
+                  "fee" : {
+                    "type" : "number"
+                  },
+                  "vehicleId" : {
+                    "type" : "integer"
+                  },
+                  "fromLocationId" : {
+                    "type" : "integer"
+                  },
+                  "toLocationId" : {
+                    "type" : "integer"
+                  }
+                },
+                "example" : {
+                  "id" : 42,
+                  "date" : "10/20/2020",
+                  "time" : "11:40am",
+                  "distance" : 100.3,
+                  "fuelPrice" : 5.0,
+                  "fee" : 11.99,
+                  "vehicleId" : 42,
+                  "fromLocationId" : 42,
+                  "toLocationId" : 44
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ride"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "No such ride ID"
           }
         }
       }
