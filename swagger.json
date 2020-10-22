@@ -716,32 +716,26 @@
         }
       }
     },
-    "/driver-vehicle" : {
-      "summary" : "Operations on a single driver related to his authorized vehicles",
+    "/drivers{driverId}/vehicles{vehicleId}" : {
+      "summary" : "Operations relating to authorizations",
       "post" : {
-        "summary" : "Create a new authorization",
+        "summary" : "Add authorization to driver",
         "tags" : [ "driver-vehicle" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "driverId" : {
-                    "type" : "integer"
-                  },
-                  "vehicleId" : {
-                    "type" : "integer"
-                  }
-                },
-                "example" : {
-                  "driverId" : 42,
-                  "vehicleId" : 42
-                }
-              }
-            }
-          }
-        },
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "vehicleId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -754,34 +748,55 @@
             }
           }
         }
+      },
+      "delete" : {
+        "summary" : "Delete an existing authorization",
+        "tags" : [ "driver-vehicle" ],
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "vehicleId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Authorization deleted"
+          },
+          "400" : {
+            "description" : "Can't delete authorization"
+          }
+        }
       }
     },
-    "/driver-ride" : {
-      "summary" : "Operations on a single driver related to his rides",
+    "/drivers{driverId}/rides{rideId}" : {
+      "summary" : "Operations relating to relations between drivers and rides",
       "post" : {
-        "summary" : "Create a new driver-ride relationship",
+        "summary" : "Add driver to ride",
         "tags" : [ "driver-ride" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "driverId" : {
-                    "type" : "integer"
-                  },
-                  "rideId" : {
-                    "type" : "integer"
-                  }
-                },
-                "example" : {
-                  "driverId" : 42,
-                  "rideId" : 42
-                }
-              }
-            }
-          }
-        },
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -794,34 +809,55 @@
             }
           }
         }
+      },
+      "delete" : {
+        "summary" : "Remove driver from ride",
+        "tags" : [ "driver-ride" ],
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Driver removed from ride"
+          },
+          "400" : {
+            "description" : "Can't remove driver from ride"
+          }
+        }
       }
     },
-    "/user-ride" : {
-      "summary" : "Operations on a single user related to his rides",
+    "/users{userId}/rides{rideId}" : {
+      "summary" : "Operations relating to user-ride relationships",
       "post" : {
-        "summary" : "Create a new user-ride relationship",
+        "summary" : "Add user to ride",
         "tags" : [ "user-ride" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "userId" : {
-                    "type" : "integer"
-                  },
-                  "rideId" : {
-                    "type" : "integer"
-                  }
-                },
-                "example" : {
-                  "userId" : 42,
-                  "rideId" : 42
-                }
-              }
-            }
-          }
-        },
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -832,6 +868,33 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Remove user from ride",
+        "tags" : [ "user-ride" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Authorization deleted"
+          },
+          "400" : {
+            "description" : "Can't delete authorization"
           }
         }
       }
