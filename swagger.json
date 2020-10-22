@@ -392,6 +392,44 @@
             "description" : "User not found"
           }
         }
+      },
+      "patch" : {
+        "summary" : "Update an existing user",
+        "tags" : [ "user" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "requestBody" : {
+          "description" : "Updated user",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "No such User ID"
+          }
+        }
       }
     },
     "/vehicles" : {
