@@ -447,20 +447,30 @@
         }
       }
     },
-    "/driver-vehicle" : {
-      "summary" : "Operations on a single driver related to his authorized vehicles",
+    "/drivers{driverId}/vehicles{vehicleId}" : {
+      "summary" : "Operations relating to authorizations",
       "post" : {
         "tags" : [ "driver-vehicle" ],
-        "summary" : "Create a new authorization",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/body_2"
-              }
-            }
+        "summary" : "Add authorization to driver",
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
           }
-        },
+        }, {
+          "name" : "vehicleId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -473,22 +483,63 @@
             }
           }
         }
+      },
+      "delete" : {
+        "tags" : [ "driver-vehicle" ],
+        "summary" : "Delete an existing authorization",
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "vehicleId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Authorization deleted"
+          },
+          "400" : {
+            "description" : "Can't delete authorization"
+          }
+        }
       }
     },
-    "/driver-ride" : {
-      "summary" : "Operations on a single driver related to his rides",
+    "/drivers{driverId}/rides{rideId}" : {
+      "summary" : "Operations relating to relations between drivers and rides",
       "post" : {
         "tags" : [ "driver-ride" ],
-        "summary" : "Create a new driver-ride relationship",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/body_3"
-              }
-            }
+        "summary" : "Add driver to ride",
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
           }
-        },
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -501,22 +552,63 @@
             }
           }
         }
+      },
+      "delete" : {
+        "tags" : [ "driver-ride" ],
+        "summary" : "Remove driver from ride",
+        "parameters" : [ {
+          "name" : "driverId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Driver removed from ride"
+          },
+          "400" : {
+            "description" : "Can't remove driver from ride"
+          }
+        }
       }
     },
-    "/user-ride" : {
-      "summary" : "Operations on a single user related to his rides",
+    "/users{userId}/rides{rideId}" : {
+      "summary" : "Operations relating to user-ride relationships",
       "post" : {
         "tags" : [ "user-ride" ],
-        "summary" : "Create a new user-ride relationship",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/body_4"
-              }
-            }
+        "summary" : "Add user to ride",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
           }
-        },
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "New authorization added",
@@ -527,6 +619,37 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user-ride" ],
+        "summary" : "Remove user from ride",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "rideId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Authorization deleted"
+          },
+          "400" : {
+            "description" : "Can't delete authorization"
           }
         }
       }
@@ -1089,51 +1212,6 @@
         },
         "example" : {
           "vehicleType" : "SUV"
-        }
-      },
-      "body_2" : {
-        "type" : "object",
-        "properties" : {
-          "driverId" : {
-            "type" : "integer"
-          },
-          "vehicleId" : {
-            "type" : "integer"
-          }
-        },
-        "example" : {
-          "driverId" : 42,
-          "vehicleId" : 42
-        }
-      },
-      "body_3" : {
-        "type" : "object",
-        "properties" : {
-          "driverId" : {
-            "type" : "integer"
-          },
-          "rideId" : {
-            "type" : "integer"
-          }
-        },
-        "example" : {
-          "driverId" : 42,
-          "rideId" : 42
-        }
-      },
-      "body_4" : {
-        "type" : "object",
-        "properties" : {
-          "userId" : {
-            "type" : "integer"
-          },
-          "rideId" : {
-            "type" : "integer"
-          }
-        },
-        "example" : {
-          "userId" : 42,
-          "rideId" : 42
         }
       }
     }
