@@ -12,6 +12,9 @@
     "name" : "vehicle-type",
     "description" : "Vehicle types"
   }, {
+    "name" : "vehicle",
+    "description" : "Ride Share vehicles"
+  }, {
     "name" : "driver",
     "description" : "Ride Share drivers"
   }, {
@@ -20,6 +23,15 @@
   }, {
     "name" : "location",
     "description" : "Ride Share locations"
+  }, {
+    "name" : "driver-ride",
+    "description" : "Relationship between driver and ride"
+  }, {
+    "name" : "driver-vehicle",
+    "description" : "Relationship between driver and vehicle"
+  }, {
+    "name" : "user-ride",
+    "description" : "Relationship between user and ride"
   } ],
   "components" : {
     "schemas" : {
@@ -186,6 +198,98 @@
           "state" : "IN",
           "zipCode" : 47602
         }
+      },
+      "Vehicle" : {
+        "description" : "Each vehicles of **Ride Share**",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "make" : {
+            "type" : "string"
+          },
+          "model" : {
+            "type" : "string"
+          },
+          "color" : {
+            "type" : "string"
+          },
+          "vehicleTypeId" : {
+            "type" : "integer"
+          },
+          "capacity" : {
+            "type" : "integer"
+          },
+          "mpg" : {
+            "type" : "number"
+          },
+          "licenseState" : {
+            "type" : "string"
+          },
+          "licensePlate" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "id" : 42,
+          "make" : "Honda",
+          "model" : "Accord",
+          "color" : "blue",
+          "vehicleTypeId" : 41,
+          "capacity" : 5,
+          "mpg" : 50.5,
+          "licenseSate" : "IN",
+          "licensePlate" : "483fg7"
+        }
+      },
+      "Driver-Ride" : {
+        "description" : "Relationship between driver and ride",
+        "type" : "object",
+        "properties" : {
+          "driverId" : {
+            "type" : "integer"
+          },
+          "rideId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "driverId" : 42,
+          "rideId" : 42
+        }
+      },
+      "Driver-Vehicle" : {
+        "description" : "Relationship between driver and vehicle",
+        "type" : "object",
+        "properties" : {
+          "driverId" : {
+            "type" : "integer"
+          },
+          "vehicleId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "driverId" : 42,
+          "vehicleId" : 42
+        }
+      },
+      "User-Ride" : {
+        "description" : "Relationship between user and ride",
+        "type" : "object",
+        "properties" : {
+          "userId" : {
+            "type" : "integer"
+          },
+          "rideId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "userId" : 42,
+          "rideId" : 42
+        }
       }
     }
   },
@@ -286,6 +390,137 @@
           },
           "400" : {
             "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/vehicles" : {
+      "summary" : "Operations on vehicles",
+      "get" : {
+        "summary" : "Get all vehicles",
+        "tags" : [ "vehicle" ],
+        "responses" : {
+          "200" : {
+            "description" : "All vehicles fetched successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Vehicle"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a new vehicle",
+        "tags" : [ "vehicle" ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Vehicle"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created sucessfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "integer"
+                    },
+                    "make" : {
+                      "type" : "string"
+                    },
+                    "model" : {
+                      "type" : "string"
+                    },
+                    "color" : {
+                      "type" : "string"
+                    },
+                    "vehicleTypeId" : {
+                      "type" : "integer"
+                    },
+                    "capacity" : {
+                      "type" : "integer"
+                    },
+                    "mpg" : {
+                      "type" : "number"
+                    },
+                    "licenseState" : {
+                      "type" : "string"
+                    },
+                    "licensePlate" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "example" : {
+                  "id" : 42,
+                  "make" : "Honda",
+                  "model" : "Accord",
+                  "color" : "blue",
+                  "vehicleTypeId" : 41,
+                  "capacity" : 5,
+                  "mpg" : 50.5,
+                  "licenseSate" : "IN",
+                  "licensePlate" : "483fg7"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Not created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                },
+                "example" : {
+                  "message" : "Duplicate license plate"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles{id}" : {
+      "get" : {
+        "summary" : "Get vehicle by ID",
+        "tags" : [ "vehicle" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "description" : "ID of vehicle to fetch",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Vehicle not found"
           }
         }
       }
@@ -409,6 +644,90 @@
           },
           "400" : {
             "description" : "Can't delete vehicle"
+          }
+        }
+      }
+    },
+    "/drivers/{id}" : {
+      "summary" : "Operations on a single driver",
+      "post" : {
+        "summary" : "Add user as driver",
+        "tags" : [ "driver" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User added as driver"
+          },
+          "400" : {
+            "description" : "Can't add user as driver"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete user as driver",
+        "tags" : [ "driver" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Driver deleted"
+          },
+          "400" : {
+            "description" : "Can't delete driver"
+          }
+        }
+      }
+    },
+    "/driver-vehicle" : {
+      "summary" : "Operations on a single driver related to his authorized vehicles",
+      "post" : {
+        "summary" : "Create a new authorization",
+        "description" : "_Each_ driver is authorized to drive certain vehicles",
+        "tags" : [ "driver-vehicle" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "driverId" : {
+                    "type" : "integer"
+                  },
+                  "vehicleId" : {
+                    "type" : "integer"
+                  }
+                },
+                "example" : {
+                  "driverId" : 42,
+                  "vehicleId" : 42
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "New authorization added",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Driver-Vehicle"
+                }
+              }
+            }
           }
         }
       }
