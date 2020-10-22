@@ -174,7 +174,6 @@
                   "$ref" : "#/components/schemas/inline_response_201_1"
                 },
                 "example" : {
-                  "id" : 42,
                   "make" : "Honda",
                   "model" : "Accord",
                   "color" : "blue",
@@ -386,33 +385,58 @@
         }
       }
     },
-    "/drivers/{id}" : {
-      "summary" : "Operations on a single driver",
-      "post" : {
+    "/drivers" : {
+      "summary" : "Operations related to all drivers",
+      "get" : {
         "tags" : [ "driver" ],
-        "summary" : "Add user as driver",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "integer"
-          }
-        } ],
+        "summary" : "Retrieve all drivers",
         "responses" : {
           "200" : {
-            "description" : "User added as driver"
-          },
-          "400" : {
-            "description" : "Can't add user as driver"
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Driver"
+                  }
+                }
+              }
+            }
           }
         }
       },
+      "post" : {
+        "tags" : [ "driver" ],
+        "summary" : "Create a new driver",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "New vehicle type created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VehicleType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drivers/{id}" : {
+      "summary" : "Operations on a single driver",
       "delete" : {
         "tags" : [ "driver" ],
-        "summary" : "Delete user as driver",
+        "summary" : "Delete an existing driver",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -443,7 +467,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/body_4"
               }
             }
           }
@@ -573,7 +597,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_4"
+                "$ref" : "#/components/schemas/body_5"
               }
             }
           },
@@ -707,7 +731,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/body_6"
               }
             }
           },
@@ -1003,9 +1027,6 @@
       "inline_response_201_1" : {
         "type" : "object",
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "make" : {
             "type" : "string"
           },
@@ -1064,15 +1085,7 @@
           }
         },
         "example" : {
-          "id" : 42,
-          "make" : "Honda",
-          "model" : "Accord",
-          "color" : "blue",
-          "vehicleTypeId" : 41,
-          "capacity" : 5,
-          "mpg" : 20,
-          "licenseSate" : "IN",
-          "licensePlate" : "483fg7"
+          "mpg" : 20
         }
       },
       "body_1" : {
@@ -1100,6 +1113,25 @@
       "body_3" : {
         "type" : "object",
         "properties" : {
+          "userId" : {
+            "type" : "integer"
+          },
+          "licenseNumber" : {
+            "type" : "integer"
+          },
+          "licenseState" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "userId" : 42,
+          "licenseNumber" : 1245665313,
+          "licenseState" : "IN"
+        }
+      },
+      "body_4" : {
+        "type" : "object",
+        "properties" : {
           "driverId" : {
             "type" : "integer"
           },
@@ -1115,9 +1147,6 @@
       "inline_response_201_2" : {
         "type" : "object",
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "date" : {
             "type" : "string"
           },
@@ -1144,7 +1173,6 @@
           }
         },
         "example" : {
-          "id" : 42,
           "date" : "10/20/2020",
           "time" : "11:40am",
           "distance" : 100.3,
@@ -1155,7 +1183,7 @@
           "toLocationId" : 43
         }
       },
-      "body_4" : {
+      "body_5" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -1187,23 +1215,12 @@
           }
         },
         "example" : {
-          "id" : 42,
-          "date" : "10/20/2020",
-          "time" : "11:40am",
-          "distance" : 100.3,
-          "fuelPrice" : 5.0,
-          "fee" : 11.99,
-          "vehicleId" : 42,
-          "fromLocationId" : 42,
           "toLocationId" : 44
         }
       },
       "inline_response_201_3" : {
         "type" : "object",
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "name" : {
             "type" : "string"
           },
@@ -1221,7 +1238,6 @@
           }
         },
         "example" : {
-          "id" : 42,
           "name" : "City Hall",
           "address" : "412 New City st.",
           "city" : "New City",
@@ -1229,7 +1245,7 @@
           "zipCode" : 47602
         }
       },
-      "body_5" : {
+      "body_6" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -1252,12 +1268,7 @@
           }
         },
         "example" : {
-          "id" : 42,
-          "name" : "City Hall",
-          "address" : "412 New City rd.",
-          "city" : "New City",
-          "state" : "IN",
-          "zipCode" : 47602
+          "address" : "412 New City rd."
         }
       }
     }
