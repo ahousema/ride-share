@@ -171,17 +171,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_201_1"
-                },
-                "example" : {
-                  "make" : "Honda",
-                  "model" : "Accord",
-                  "color" : "blue",
-                  "vehicleTypeId" : 41,
-                  "capacity" : 5,
-                  "mpg" : 50.5,
-                  "licenseSate" : "IN",
-                  "licensePlate" : "483fg7"
+                  "$ref" : "#/components/schemas/Vehicle"
                 }
               }
             }
@@ -251,7 +241,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body"
+                "$ref" : "#/components/schemas/Vehicle"
               }
             }
           },
@@ -302,7 +292,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_1"
+                "$ref" : "#/components/schemas/body"
               }
             }
           }
@@ -362,7 +352,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_2"
+                "$ref" : "#/components/schemas/body_1"
               }
             }
           },
@@ -413,7 +403,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/Driver"
               }
             }
           }
@@ -424,7 +414,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/VehicleType"
+                  "$ref" : "#/components/schemas/Driver"
                 }
               }
             }
@@ -462,7 +452,62 @@
       "post" : {
         "tags" : [ "driver-vehicle" ],
         "summary" : "Create a new authorization",
-        "description" : "_Each_ driver is authorized to drive certain vehicles",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "New authorization added",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Driver-Vehicle"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver-ride" : {
+      "summary" : "Operations on a single driver related to his rides",
+      "post" : {
+        "tags" : [ "driver-ride" ],
+        "summary" : "Create a new driver-ride relationship",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "New authorization added",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Driver-Ride"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-ride" : {
+      "summary" : "Operations on a single user related to his rides",
+      "post" : {
+        "tags" : [ "user-ride" ],
+        "summary" : "Create a new user-ride relationship",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -478,7 +523,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Driver-Vehicle"
+                  "$ref" : "#/components/schemas/User-Ride"
                 }
               }
             }
@@ -526,7 +571,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_201_2"
+                  "$ref" : "#/components/schemas/Ride"
                 }
               }
             }
@@ -597,7 +642,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/Ride"
               }
             }
           },
@@ -660,7 +705,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_201_3"
+                  "$ref" : "#/components/schemas/Location"
                 }
               }
             }
@@ -731,7 +776,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_6"
+                "$ref" : "#/components/schemas/Location"
               }
             }
           },
@@ -1024,71 +1069,7 @@
           "userId" : 42
         }
       },
-      "inline_response_201_1" : {
-        "type" : "object",
-        "properties" : {
-          "make" : {
-            "type" : "string"
-          },
-          "model" : {
-            "type" : "string"
-          },
-          "color" : {
-            "type" : "string"
-          },
-          "vehicleTypeId" : {
-            "type" : "integer"
-          },
-          "capacity" : {
-            "type" : "integer"
-          },
-          "mpg" : {
-            "type" : "number"
-          },
-          "licenseState" : {
-            "type" : "string"
-          },
-          "licensePlate" : {
-            "type" : "string"
-          }
-        }
-      },
       "body" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "make" : {
-            "type" : "string"
-          },
-          "model" : {
-            "type" : "string"
-          },
-          "color" : {
-            "type" : "string"
-          },
-          "vehicleTypeId" : {
-            "type" : "integer"
-          },
-          "capacity" : {
-            "type" : "integer"
-          },
-          "mpg" : {
-            "type" : "number"
-          },
-          "licenseState" : {
-            "type" : "string"
-          },
-          "licensePlate" : {
-            "type" : "string"
-          }
-        },
-        "example" : {
-          "mpg" : 20
-        }
-      },
-      "body_1" : {
         "type" : "object",
         "properties" : {
           "vehicleType" : {
@@ -1099,7 +1080,7 @@
           "vehicleType" : "Pickup Truck"
         }
       },
-      "body_2" : {
+      "body_1" : {
         "type" : "object",
         "properties" : {
           "vehicleType" : {
@@ -1110,26 +1091,7 @@
           "vehicleType" : "SUV"
         }
       },
-      "body_3" : {
-        "type" : "object",
-        "properties" : {
-          "userId" : {
-            "type" : "integer"
-          },
-          "licenseNumber" : {
-            "type" : "integer"
-          },
-          "licenseState" : {
-            "type" : "string"
-          }
-        },
-        "example" : {
-          "userId" : 42,
-          "licenseNumber" : 1245665313,
-          "licenseState" : "IN"
-        }
-      },
-      "body_4" : {
+      "body_2" : {
         "type" : "object",
         "properties" : {
           "driverId" : {
@@ -1144,131 +1106,34 @@
           "vehicleId" : 42
         }
       },
-      "inline_response_201_2" : {
+      "body_3" : {
         "type" : "object",
         "properties" : {
-          "date" : {
-            "type" : "string"
-          },
-          "time" : {
-            "type" : "string"
-          },
-          "distance" : {
-            "type" : "number"
-          },
-          "fuelPrice" : {
-            "type" : "number"
-          },
-          "fee" : {
-            "type" : "number"
-          },
-          "vehicleId" : {
+          "driverId" : {
             "type" : "integer"
           },
-          "fromLocationId" : {
-            "type" : "integer"
-          },
-          "toLocationId" : {
+          "rideId" : {
             "type" : "integer"
           }
         },
         "example" : {
-          "date" : "10/20/2020",
-          "time" : "11:40am",
-          "distance" : 100.3,
-          "fuelPrice" : 5.0,
-          "fee" : 11.99,
-          "vehicleId" : 42,
-          "fromLocationId" : 42,
-          "toLocationId" : 43
+          "driverId" : 42,
+          "rideId" : 42
         }
       },
-      "body_5" : {
+      "body_4" : {
         "type" : "object",
         "properties" : {
-          "id" : {
+          "userId" : {
             "type" : "integer"
           },
-          "date" : {
-            "type" : "string"
-          },
-          "time" : {
-            "type" : "string"
-          },
-          "distance" : {
-            "type" : "number"
-          },
-          "fuelPrice" : {
-            "type" : "number"
-          },
-          "fee" : {
-            "type" : "number"
-          },
-          "vehicleId" : {
-            "type" : "integer"
-          },
-          "fromLocationId" : {
-            "type" : "integer"
-          },
-          "toLocationId" : {
+          "rideId" : {
             "type" : "integer"
           }
         },
         "example" : {
-          "toLocationId" : 44
-        }
-      },
-      "inline_response_201_3" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "address" : {
-            "type" : "string"
-          },
-          "city" : {
-            "type" : "string"
-          },
-          "state" : {
-            "type" : "string"
-          },
-          "zipCode" : {
-            "type" : "string"
-          }
-        },
-        "example" : {
-          "name" : "City Hall",
-          "address" : "412 New City st.",
-          "city" : "New City",
-          "state" : "IN",
-          "zipCode" : 47602
-        }
-      },
-      "body_6" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "address" : {
-            "type" : "string"
-          },
-          "city" : {
-            "type" : "string"
-          },
-          "state" : {
-            "type" : "string"
-          },
-          "zipCode" : {
-            "type" : "string"
-          }
-        },
-        "example" : {
-          "address" : "412 New City rd."
+          "userId" : 42,
+          "rideId" : 42
         }
       }
     }
