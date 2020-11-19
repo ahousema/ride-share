@@ -23,6 +23,6 @@ insert into public.User (id, firstName, lastName, email, password, phone, isAdmi
 insert into public.Vehicle (id, make, model, color, vehicleTypeId, capacity, mpg, licenseState, licensePlate) values (1, 'Honda', 'Accord', 'Blu', 1, 5, 45, 'IN', 123456);
 insert into public.Vehicle (id, make, model, color, vehicleTypeId, capacity, mpg, licenseState, licensePlate) values (2, 'Honda ', 'Civic', 'Red', 2, 4, 10, 'AZ', 292283);
 insert into public.Vehicle (id, make, model, color, vehicleTypeId, capacity, mpg, licenseState, licensePlate) values (3, 'Hyundai', 'Sonata', 'Red', 3, 5, 30, 'NC', 423423);
-insert into public.Vehicle Type (id, type) values (1, 'Honda Accord');
-insert into public.Vehicle Type (id, type) values (2, 'Honda Civic');
-insert into public.Vehicle Type (id, type) values (3, 'Hyundai Sonata');
+insert into public.VehicleType (id, type) values (1, 'Honda Accord');
+insert into public.VehicleType (id, type) values (2, 'Honda Civic');
+insert into public.VehicleType (id, type) values (3, 'Hyundai Sonata');
