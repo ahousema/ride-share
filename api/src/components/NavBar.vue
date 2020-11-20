@@ -2,7 +2,7 @@
   <v-app-bar app dark color="primary">
     <router-link v-bind:to="{ name: 'home-page' }">
       <v-toolbar-title class="white--text">
-        Single Page App
+        Ride Share
       </v-toolbar-title>
     </router-link>
 
@@ -11,13 +11,9 @@
     <v-btn v-if="!isLoggedIn" text v-bind:to="{ name: 'sign-up' }">
       Sign Up
     </v-btn>
-    <v-btn v-if="!isLoggedIn" text v-bind:to="{ name: 'sign-in' }">
-      Sign In
+    <v-btn v-if="!isLoggedIn" text v-bind:to="{ name: 'log-in' }">
+      Log In
     </v-btn>
-    <v-btn v-if="!isLoggedIn" text v-bind:to="{ name: 'reset-password' }">
-      Reset Password
-    </v-btn>
-    <v-btn text v-bind:to="{ name: 'about-us' }">About Us</v-btn>
 
     <v-menu v-if="isLoggedIn" offset-y>
       <template v-slot:activator="{ on }">
