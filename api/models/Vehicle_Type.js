@@ -1,6 +1,5 @@
 //give access to knex and Model
-const { knex, Model } = require("../db.js");
-import { Vehicle } from './Vehicle.js';
+const { knex, Model } = require("../db");
 
 class VehicleType extends Model {
 	static get tableName() {
@@ -20,4 +19,4 @@ class VehicleType extends Model {
 	}
 }
 
-export { VehicleType };
+module.exports = VehicleType;

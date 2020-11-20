@@ -1,9 +1,5 @@
 //give access to knex and Model
-const { knex, Model } = require("../db.js");
-import { Driver } from './Diver.js';
-import { Ride } from './Ride.js';
-import { State } from './State.js';
-import { VehicleType } from './Vehicle_Type.js';
+const { knex, Model } = require("../db");
 
 class Vehicle extends Model {
 	static get tableName() {
@@ -30,7 +26,7 @@ class Vehicle extends Model {
 					from: 'vehicle.id',
 					to: 'ride.vehicleId'
 				}
-			}
+			},
 			state: {
 				relation: Model.BelongsToOneRelation,
 				modelClass: Location,
@@ -51,4 +47,4 @@ class Vehicle extends Model {
 	}
 }
 
-export { Vehicle };
+module.exports = Vehicle;

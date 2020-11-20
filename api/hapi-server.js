@@ -16,7 +16,7 @@ objection.Model.knex(knex);
 // Models
 const Driver = require("./models/Driver");
 const Location = require("./models/Location");
-const Ride = require("./models/Ride");
+//const Ride = require("./models/Ride");
 const State = require("./models/State");
 const User = require("./models/User");
 const Vehicle = require("./models/Vehicle");
@@ -47,10 +47,10 @@ async function init() {
   });
 
   // Configure routes.
-  /*server.route([
+  server.route([
     {
       method: "POST",
-      path: "/accounts",
+      path: "/user",
       config: {
         description: "Sign up for an account",
         validate: {
@@ -58,12 +58,13 @@ async function init() {
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
             email: Joi.string().email().required(),
+			phone: Joi.string().required(),
             password: Joi.string().required(),
           }),
         },
       },
       handler: async (request, h) => {
-        const existingAccount = await Account.query()
+        const existingAccount = await User.query()
           .where("email", request.payload.email)
           .first();
         if (existingAccount) {
@@ -73,10 +74,11 @@ async function init() {
           };
         }
 
-        const newAccount = await Account.query().insert({
-          first_name: request.payload.firstName,
-          last_name: request.payload.lastName,
+        const newAccount = await User.query().insert({
+          firstName: request.payload.firstName,
+          lastName: request.payload.lastName,
           email: request.payload.email,
+		  phone: request.payload.phone,
           password: request.payload.password,
         });
 
@@ -96,23 +98,23 @@ async function init() {
 
     {
       method: "GET",
-      path: "/accounts",
+      path: "/user",
       config: {
         description: "Retrieve all accounts",
       },
       handler: (request, h) => {
-        return Account.query();
+        return User.query();
       },
     },
 
     {
       method: "DELETE",
-      path: "/accounts/{id}",
+      path: "/user/{id}",
       config: {
         description: "Delete an account",
       },
       handler: (request, h) => {
-        return Account.query()
+        return User.query()
           .deleteById(request.params.id)
           .then((rowsDeleted) => {
             if (rowsDeleted === 1) {
@@ -131,32 +133,6 @@ async function init() {
     },
     
     {
-      method: "PATCH",
-      path: "/accounts/{id}",
-      options: {
-      	description: "Update a password",
-      	validate: {
-      	  params: Joi.object({
-      	    email: Joi.string().email(),
-      	  }),
-      	  payload: Joi.object({
-      	    oldPassword: Joi.string().min(8).required(),
-      	    password: Joi.string().min(8).required(),
-      	    confirmNewPassword: Joi.string().min(8).required(),
-      	  }),
-      	},
-      },
-      handler: async (request, h) => {
-      	if (!(await Account.query().findById(request.params.email))) {
-      	  return h.response(`Account ${request.params.email} not found`).code(404);
-      	}
-      	return Account.query()
-      	  .findById(request.params.email)
-      	  .patch(request.payload.password);
-      },
-    },
-
-    {
       method: "POST",
       path: "/login",
       config: {
@@ -169,7 +145,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-        const account = await Account.query()
+        const account = await User.query()
           .where("email", request.payload.email)
           .first();
         if (
@@ -180,10 +156,11 @@ async function init() {
             ok: true,
             msge: `Logged in successfully as '${request.payload.email}'`,
             details: {
-              id: account.id,
-              firstName: account.first_name,
-              lastName: account.last_name,
-              email: account.email,
+              id: user.id,
+              firstName: user.first_name,
+              lastName: user.last_name,
+              email: user.email,
+			  phone: user.phone
             },
           };
         } else {
@@ -195,7 +172,7 @@ async function init() {
       },
     },
   ]);
-  */
+  
   // Start the server.
   await server.start();
 }

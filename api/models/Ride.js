@@ -1,9 +1,5 @@
 //give access to knex and Model
-const { knex, Model } = require("../db.js");
-import { Vehicle } from './Vehicle.js';
-import { Driver } from './Driver.js';
-import { User } from './User.js';
-import { Location } from './Location.js';
+const { knex, Model } = require("../db");
 
 class Ride extends Model
 {
@@ -25,7 +21,7 @@ class Ride extends Model
 					from: 'ride.vehicleid',
 					to: 'vehicle.id'
 				}
-			}
+			},
 			driver:
 			{
 				relation: Model.ManyToManyRelation,
@@ -40,7 +36,7 @@ class Ride extends Model
 					},
 					to: 'driver.id'
 				}
-			}
+			},
 			user:
 			{
 				relation: Model.ManyToManyRelation,
@@ -55,7 +51,7 @@ class Ride extends Model
 					},
 					to: 'user.id'
 				}
-			}
+			},
 			locat:
 			{
 				relation: Model.BelongsToOneRelation,
@@ -75,4 +71,4 @@ class Ride extends Model
 	}
 }
 
-export { Ride };
+module.exports = Ride;

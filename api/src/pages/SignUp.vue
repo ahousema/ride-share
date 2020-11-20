@@ -23,6 +23,7 @@
           type="email"
           label="Your email address"
         >
+		</v-text-field>
         <v-text-field
           v-model="newMember.phone"
           v-bind:rules="rules.phone"
@@ -39,10 +40,7 @@
           label="Non-trivial password"
           required
         >
-        <v-checkbox
-          v-model=newMember.isDriver"
-          label="Sign up as driver?"
-        </v-text-field>
+		</v-text-field>
         <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
           >Sign Up
         </v-btn>
@@ -119,7 +117,7 @@ export default {
           (val) => val.length >= 8 || "Minimum 8 characters",
         ],
         phone: [
-          (val) => /\d{3}\-\d{3}\-d{4}/.test(val) || "Invalid phone number",
+          (val) => /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(val) || "Invalid phone number",
         ]
       },
     };
@@ -132,12 +130,12 @@ export default {
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/User", {
+        .post("/user", {
           firstName: this.newMember.firstName,
           lastName: this.newMember.lastName,
           email: this.newMember.email,
+          phone: this.newMember.phone,
           password: this.newMember.password,
-          phone: this.newMember.phone
         })
         .then((result) => {
           // Based on whether things worked or not, show the
