@@ -3,7 +3,7 @@
     <div>
       <h4 class="display-1">Sign Up</h4>
 
-      <instructions details="Sign up for our nifty site." />
+      <instructions details="Sign up for Ride Share." />
 
       <v-form v-model="valid">
         <v-text-field
@@ -23,6 +23,13 @@
           type="email"
           label="Your email address"
         >
+        <v-text-field
+          v-model="newMember.phone"
+          v-bind:rules="rules.phone"
+          error-count="10"
+          type="phone"
+          label="Your phone number"
+        >
         </v-text-field>
         <v-text-field
           v-model="newMember.password"
@@ -32,6 +39,9 @@
           label="Non-trivial password"
           required
         >
+        <v-checkbox
+          v-model=newMember.isDriver"
+          label="Sign up as driver?"
         </v-text-field>
         <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
           >Sign Up
@@ -80,6 +90,7 @@ export default {
         lastName: "",
         email: "",
         password: "",
+        phone: ""
       },
 
       // Was an account created successfully?
@@ -107,6 +118,9 @@ export default {
           (val) => /\d/.test(val) || "Need digit",
           (val) => val.length >= 8 || "Minimum 8 characters",
         ],
+        phone: [
+          (val) => /\d{3}\-\d{3}\-d{4}/.test(val) || "Invalid phone number",
+        ]
       },
     };
   },
@@ -118,11 +132,12 @@ export default {
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/accounts", {
+        .post("/User", {
           firstName: this.newMember.firstName,
           lastName: this.newMember.lastName,
           email: this.newMember.email,
           password: this.newMember.password,
+          phone: this.newMember.phone
         })
         .then((result) => {
           // Based on whether things worked or not, show the
@@ -150,7 +165,7 @@ export default {
       this.dialogVisible = false;
       if (this.accountCreated) {
         // Only navigate away from the sign-up page if we were successful.
-        this.$router.push({ name: "home-page" });
+        this.$router.push({ name: "user-home" });
       }
     },
   },

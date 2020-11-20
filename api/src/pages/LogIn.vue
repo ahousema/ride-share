@@ -12,7 +12,6 @@
                 v-model="email"
                 label="Email"
                 name="email"
-                prepend-icon="mdi-email"
                 type="text"
               />
               <v-text-field
@@ -20,7 +19,6 @@
                 id="password"
                 label="Password"
                 name="password"
-                prepend-icon="mdi-lock"
                 type="password"
               />
             </v-form>
@@ -58,14 +56,14 @@ export default {
     logIn() {
       this.$axios
         .post("/login", {
-          email: this.email,
+          username: this.username,
           password: this.password,
         })
         .then((result) => {
           this.showSnackbar(result.data.msge);
           if (result.data.ok) {
             this.$store.commit("logIn", result.data.details);
-            this.$router.push({ name: "home-page" });
+            this.$router.push({ name: "user-home" });
           }
         })
         .catch((err) => this.showSnackbar(err));
