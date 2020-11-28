@@ -3,22 +3,22 @@ const { knex, Model } = require("../db");
 
 class Driver extends Model {
 	static get tableName() {
-		return "driver";
+		return "Driver";
 	}
 
 	static get relationMappings() {
 		return {
 			user: {
 				relation: Model.BelongsToOneRelation,
-				modelClass: User,
+				modelClass: require("./User"),
 				join: {
 					from: 'driver.id',
 					to: 'user.id'
-				}
+				},
 			},
 			ride: {
 				relation: Model.ManyToManyRelation,
-				modelClass: Ride,
+				modelClass: require("./Ride"),
 				join: {
 					from: 'driver.id',
 					through: {
@@ -26,11 +26,11 @@ class Driver extends Model {
 						to: 'drivers.rideId'
 					},
 					to: 'ride.id'
-				}
+				},
 			},
 			vehicle: {
 				relation: Model.ManyToManyRelation,
-				modelClass: Vehicle,
+				modelClass: require("./Vehicle"),
 				join: {
 					from: 'driver.id',
 					through: {
@@ -38,18 +38,18 @@ class Driver extends Model {
 						to: 'authorization.vehicleId'
 					},
 					to: 'vehicle.id'
-				}
+				},
 			},
 			state:
 			{
 				relation: Model.BelongsToOneRelation,
-				ModelClass: Location,
+				ModelClass: require("./Location"),
 				join:
 				{
 					from: 'driver.licenseState',
 					to: 'state.abbreviation'
-				}
-			}
+				},
+			},
 		};
 	}
 }

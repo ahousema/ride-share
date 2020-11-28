@@ -3,18 +3,18 @@ const { knex, Model } = require("../db");
 
 class VehicleType extends Model {
 	static get tableName() {
-		return 'vehicletype';
+		return 'VehicleType';
 	}
 	static get relationMappings() {
 		return {
 			vehicle: {
 				relation: Model.HasManyRelation,
-				modelClass: Vehicle,
+				modelClass: require("./Vehicle"),
 				join: {
 					from: 'vehicletype.id',
 					to: 'vehicle.vehicleTypeId'
-				}
-			}
+				},
+			},
 		};
 	}
 }

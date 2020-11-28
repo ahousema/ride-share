@@ -3,34 +3,34 @@ const { knex, Model } = require("../db");
 
 class State extends Model {
 	static get tableName() {
-		return 'state';
+		return 'State';
 	}
 	static get relationMappings() {
 		return {
 			driver: {
 				relation: Model.HasManyRelation,
-				modelClass: Driver,
+				modelClass: require("./Driver"),
 				join: {
 					from: 'state.abbreviation',
 					to: 'driver.licenseState'
-				}
+				},
 			},
 			vehicle: {
 				relation: Model.HasManyRelation,
-				modelClass: Vehicle,
+				modelClass: require("./Vehicle"),
 				join: {
 					from: 'state.abbreviation',
 					to: 'vehicle.licenseState'
-				}
+				},
 			},
 			locat: {
 				relation: Model.HasManyRelation,
-				modelClass: Location,
+				modelClass: require("./Location"),
 				join: {
 					from: 'state.abbreviation',
 					to: 'locat.state'
-				}
-			}
+				},
+			},
 		};
 	}
 }

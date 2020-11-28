@@ -3,13 +3,13 @@ const { knex, Model } = require("../db");
 
 class Location extends Model {
 	static get tableName() {
-		return 'locat';
+		return 'Location';
 	}
 	static get relationMappings() {
 		return {
 			ride: {
 				relation: Model.HasManyRelation,
-				modelClass: Ride,
+				modelClass: require("./Ride"),
 				join: {
 					from: 'location.id',
 					to: 'ride.fromLocationId'
@@ -17,16 +17,16 @@ class Location extends Model {
 				join: {
 					from: 'location.id',
 					to: 'ride.toLocationid'
-				}
+				},
 			},
 			state: {
 				relation: Model.BelongsToOneRelation,
-				modelClass: State,
+				modelClass: require("./State"),
 				join: {
 					from: 'location.state',
 					to: 'state.abbreviation'
-				}
-			}
+				},
+			},
 		};
 	}
 }

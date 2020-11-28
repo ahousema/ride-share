@@ -16,11 +16,11 @@ objection.Model.knex(knex);
 // Models
 const Driver = require("./models/Driver");
 const Location = require("./models/Location");
-//const Ride = require("./models/Ride");
+const Ride = require("./models/Ride");
 const State = require("./models/State");
 const User = require("./models/User");
 const Vehicle = require("./models/Vehicle");
-const Vehicle_Type = require("./models/Vehicle_Type");
+const VehicleType = require("./models/VehicleType");
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
