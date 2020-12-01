@@ -56,7 +56,7 @@ export default {
     logIn() {
       this.$axios
         .post("/login", {
-          username: this.email,
+          email: this.email,
           password: this.password,
         })
         .then((result) => {
