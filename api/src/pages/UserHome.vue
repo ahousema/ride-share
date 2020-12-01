@@ -15,7 +15,11 @@
       Check Rides
     </v-btn>
 
-      <p class="body-1">Sign up for an existing ride, request a ride to be added, or check rides you've already joined.</p>
+	<v-btn text v-bind:to="{ name: 'user-driver' }">
+	  Become A Driver
+	</v-btn>
+
+      <p class="body-1">Sign up for an existing ride, request a ride to be added, check rides you've already joined, or sign up to become a driver.</p>
     </div>
   </v-container>
 </template>
